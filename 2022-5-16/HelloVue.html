@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloVue</title>
+    <!--https://v3.cn.vuejs.org/guide/installation.html#对不同构建版本的解释-->
+    <script src="../lib/js/vue.global.prod.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 自定义Property -->
+        <h1>{{title}}</h1>
+        <p>{{msg}}</p>
+        <!-- 内置Property测试 -->
+        <p>{{$emit}}</p>
+    </div>
+    <script>
+        // Vue 应用的配置选项 - 这里用于为根组件配置选项 - 可以直接书写至创建应用实例中
+        const RootComponentConfig = {
+            /*
+            * 1. 配置选项（内含 自定义Property 与 内置Property[含$前缀]）：
+            *    1. data
+            *    2. methods
+            *    3. props
+            *    4. computed
+            *    5. inject
+            *    6. setup
+            *  注意：选项中 用户自定义的属性（Property） 需要通过 实例化的组件 暴露
+            *  */
+
+            // 如：data 选项
+            data(){
+                // 用户自定义的 Property - 通过 组件实例 暴露
+                return {
+                    title : "Hello Vue!",
+                    msg : "My First Vue Page."
+                }
+            },
+            //....
+            //....
+            /*
+            * 2. 生命周期钩子
+            *    1. beforeCreate
+            *    2. created
+            *    3. beforeMount
+            *    4. mounted
+            *    5. beforeUpdate
+            *    6. updated
+            *    7. beforeUnmount
+            *    8. Unmounted
+            *  注意：不要使用箭头函数（Lambda），因为在箭头函数中没有this关键字，经常报错。this指向调用它的当前活动实例。
+            *  https://v3.cn.vuejs.org/guide/instance.html#生命周期图示
+            *  */
+
+            beforeCreate(){
+                console.log("创建前");
+                //创建前 Property（属性）还没有初始化
+                console.log('标题：'+this.title);
+                console.log('信息：'+this.msg);
+            },
+            created(){
+                console.log("创建了");
+                //创建后 Property（属性）已经初始化
+                console.log('标题：'+this.title);
+                console.log('信息：'+this.msg);
+            }
+            //....
+            //....
+
+        };
+
+        /* 1. 应用实例 */
+
+        // 创建Vue应用实例 - 这里的应用将挂载注册为 根组件（全局组件）
+        // 注意：应用实例的许多方法都返回其本身，所以可以使用链式书写。
+        const app = Vue.createApp(RootComponentConfig);
+
+        /* 2. 组件实例 */
+
+        // 将应用挂载至DOM元素 - 注意：这里返回的是 组件的 实例，不再返回 应用实例 本身 - 这里的组件为 根组件（全局组件）
+        // 注意： 根组件 与 其他组件 没什么不同，配置选项 是一样的，所对应的 组件实例行为 也是一样的。 只不过 根组件 为 渲染的起点。
+        app_view_model = app.mount('#app');
+
+        /* 3. 关系：一个应用实例可以被多个组件实例共享 */
+
+    </script>
+</body>
+</html>
